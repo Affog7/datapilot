@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres:16
+    container_name: datapilot-db
+    environment:
+      POSTGRES_DB: olist
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Remplis POSTGRES_PASSWORD dans .env}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+      - ./db/data:/data:ro
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
