@@ -43,4 +43,8 @@ COMMENT ON COLUMN order_payments.payment_installments IS
 
 -- À TOI : écris ces deux commentaires
 -- COMMENT ON COLUMN order_reviews.review_score IS '...';
+COMMENT ON TABLE order_reviews IS
+  'Avis des clients sur les commandes. Plusieurs avis peuvent exister pour une même commande (ex. avis sur le produit + avis sur le transporteur).';
 -- COMMENT ON COLUMN products.product_category_name IS '...';
+COMMENT ON COLUMN products.product_category_name IS
+  'Nom de la catégorie du produit, en anglais. Peut contenir des fautes d''orthographe et des variantes (ex. "bed_bath_table" et "bed_bath_table_1").';

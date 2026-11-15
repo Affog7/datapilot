@@ -30,3 +30,10 @@ console.log(
     .map((block) => block.text)
     .join(" "),
 );
+console.log(
+  "Réponse :",
+  response.content
+    .filter((block) => block.type === "text")
+    .map((block) => block.text)
+    .join(" "),
+);
