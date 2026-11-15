@@ -1,3 +1,5 @@
+![CI](https://github.com/Affog7/datapilot/actions/workflows/ci.yml/badge.svg)
+
 # DataPilot
 
 Agent IA qui répond en français à des questions sur une base de données.
