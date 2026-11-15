@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "hello": "tsx src/hello.ts"
   },
   "keywords": [],
   "author": "",
@@ -20,5 +21,12 @@
     }
   },
   "packageManager": "pnpm@12.18.0",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
+    "dotenv": "^18.0.10"
+  },
+  "devDependencies": {
+    "tsx": "^4.23.15"
+  }
 }

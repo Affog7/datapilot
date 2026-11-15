@@ -65,10 +65,13 @@ CREATE TABLE geolocation (
 
 -- olist_orders_dataset.csv
 -- Les dates d'étapes sont vides tant que l'étape n'a pas eu lieu (commandes annulées, en cours…).
+-- CHECK : les 8 statuts présents dans le CSV. Un statut inconnu fait échouer le chargement.
 CREATE TABLE orders (
     order_id                      VARCHAR(32) PRIMARY KEY,
     customer_id                   VARCHAR(32) NOT NULL REFERENCES customers (customer_id),
-    order_status                  TEXT        NOT NULL,
+    order_status                  TEXT        NOT NULL CHECK (order_status IN (
+                                      'created', 'approved', 'invoiced', 'processing',
+                                      'shipped', 'delivered', 'canceled', 'unavailable')),
     order_purchase_timestamp      TIMESTAMP   NOT NULL,
     order_approved_at             TIMESTAMP,
     order_delivered_carrier_date  TIMESTAMP,
@@ -91,10 +94,13 @@ CREATE TABLE order_items (
 
 -- olist_order_payments_dataset.csv
 -- Une commande peut être réglée en plusieurs paiements (payment_sequential).
+-- CHECK : les 5 types présents dans le CSV (not_defined : 3 lignes, montant nul).
 CREATE TABLE order_payments (
     order_id             VARCHAR(32)   NOT NULL REFERENCES orders (order_id),
     payment_sequential   INTEGER       NOT NULL,
-    payment_type         TEXT          NOT NULL,
+    payment_type         TEXT          NOT NULL CHECK (payment_type IN (
+                                           'credit_card', 'boleto', 'voucher',
+                                           'debit_card', 'not_defined')),
     payment_installments INTEGER       NOT NULL,
     payment_value        NUMERIC(10,2) NOT NULL,
     PRIMARY KEY (order_id, payment_sequential)
@@ -124,3 +130,6 @@ CREATE INDEX idx_orders_customer_id      ON orders (customer_id);
 CREATE INDEX idx_order_items_product_id  ON order_items (product_id);
 CREATE INDEX idx_order_items_seller_id   ON order_items (seller_id);
 CREATE INDEX idx_order_reviews_order_id  ON order_reviews (order_id);
+
+-- Index pour les filtres par période (« ventes de 2017 », « par mois »…)
+CREATE INDEX idx_orders_purchase_timestamp ON orders (order_purchase_timestamp);
